@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+    CMD=bash
+else
+    CMD=$@
+fi
+
+docker run -it -v $(pwd):/app advent_2020 $CMD
