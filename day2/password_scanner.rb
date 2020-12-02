@@ -15,10 +15,17 @@ policy_passwords = pol_pass_arr.map do |pol, pass|
   }
 end
 
-valid_passwords = policy_passwords.select do |e|
+part1_valid_passwords = policy_passwords.select do |e|
   char_count = e[:password].count(e[:policy][:char])
   char_count >= e[:policy][:min] && char_count <= e[:policy][:max]
 end
 
-puts valid_passwords.size
+puts part1_valid_passwords.size
+
+part2_valid_passwords = policy_passwords.select do |e|
+  [e[:password][e[:policy][:min]], e[:password][e[:policy][:max]] ].count(e[:policy][:char]) == 1
+end
+
+puts part2_valid_passwords.size
+
 
