@@ -12,3 +12,14 @@ sum_of_counts = customs_forms
 
 
 puts "Part 1: #{sum_of_counts}"
+
+sum_of_uniq_elements = customs_forms
+  .split("\n")
+  .join(",")
+  .split(",,")
+  .map {|s| s.split(",").map {|is| is.chars } }
+  .map {|thing| thing[0].intersection(*thing) }
+  .map(&:length)
+  .inject(:+)
+
+puts "Part 2: #{sum_of_uniq_elements}"
