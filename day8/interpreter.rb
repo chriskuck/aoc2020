@@ -9,26 +9,17 @@ class Interpreter
   # takes in string programs
   # OP ARG
   def load(program)
-    @program = program
+    @state[:program] = program
     validate_program
   end
 
-  def step
-    @pc = exec(@program,@pc,@state)
-  end
-
-  def run
-    while @pc != -1
-      @pc = exec(@program,@pc,@state)
-    end
-  end
-
   def run_no_dups
-    instructions_run = []
-    while !instructions_run.include?(@pc)
-      instructions_run << @pc
-      @pc = exec(@program, @pc, @state)
+    state[:instructions_run] = []
+    while !state[:instructions_run].include?(@pc) && @pc < program.length
+      state[:instructions_run] << @pc
+      @pc = exec(program, @pc, @state)
     end
+    @pc >= program.length
   end
 
   def state
@@ -36,6 +27,10 @@ class Interpreter
   end
 
   private
+
+  def program
+    @state[:program]
+  end
 
   def validate_program
     return false if @program.nil?
