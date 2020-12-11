@@ -18,11 +18,19 @@ class SeatLife
     @new_seats = nil
   end
 
-  def sim(x,y)
+  def sim_part1(x,y)
     if @seats[[x,y]].empty?
       @new_seats[[x,y]].occupied if @seats.occupied_neighbors(x,y).length == 0
     elsif @seats[[x,y]].occupied?
       @new_seats[[x,y]].empty if @seats.occupied_neighbors(x,y).length >= 4
+    end
+  end
+
+  def sim(x,y)
+    if @seats[[x,y]].empty?
+      @new_seats[[x,y]].occupied if @seats.see_occupied_neighbors(x,y).length == 0
+    elsif @seats[[x,y]].occupied?
+      @new_seats[[x,y]].empty if @seats.see_occupied_neighbors(x,y).length >= 5
     end
   end
 
