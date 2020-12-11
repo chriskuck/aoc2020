@@ -25,15 +25,32 @@ def array_split(array, delim)
   new_array
 end
 
+def add_one(arr)
+  return if arr.length <= 1
+
+  (0..arr.length-2).map do |i|
+    new_arr = arr.clone()
+    new_arr[i] += new_arr.delete_at(i+1)
+    new_arr
+  end
+end
+
 def compute_permutations(arr)
-  return 7 if arr.length == 4
-  return 4 if arr.length == 3
-  return 2 if arr.length == 2
-  return 1 if arr.length <= 1
+  solutions = []
+  to_process = []
+  to_process << arr
+
+  while !to_process.empty?
+    soln = to_process.pop
+    solutions << soln
+    new_solutions = add_one(soln)
+    to_process.concat(new_solutions) if !new_solutions.nil?
+  end
+
+  solutions.uniq.select {|s| !s.any? {|is| is > 3 } }.count
 end
 
 distances = raw_adapters.clone().prepend(0).sort.each_cons(2).map {|p| p[1]-p[0]}
 faux_trees = array_split(distances,3)
-binding.pry
 puts "Part 2: #{faux_trees.map {|ft| compute_permutations(ft) }.inject(:*)}"
 
