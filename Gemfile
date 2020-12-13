@@ -8,4 +8,3 @@ gem 'rubocop', '~> 1.2'
 gem 'rspec'
 
 gem "pry",'~> 0.13.1'
-gem "pry-byebug"
